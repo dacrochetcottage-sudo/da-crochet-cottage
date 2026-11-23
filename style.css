@@ -1,0 +1,213 @@
+
+/* General settings */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Georgia, serif;
+    background-color: #faf7f2;
+    color: #514239;
+    line-height: 1.6;
+}
+
+/* Navigation */
+header {
+    background-color: #eee7dc;
+    padding: 15px 7%;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: #514239;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.logo img {
+    width: 55px;
+    height: 55px;
+    object-fit: contain;
+}
+
+nav div a {
+    text-decoration: none;
+    color: #514239;
+    margin-left: 20px;
+    font-size: 16px;
+}
+
+/* Home section */
+#home {
+    text-align: center;
+    padding: 110px 20px;
+    background-color: #e9dfd2;
+}
+
+#home h1 {
+    font-size: 42px;
+    margin-bottom: 15px;
+}
+
+#home p {
+    font-size: 18px;
+    margin-bottom: 25px;
+}
+
+#home a {
+    display: inline-block;
+    background-color: #8b7564;
+    color: white;
+    padding: 12px 25px;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+/* Shop section */
+#shop {
+    text-align: center;
+    padding: 65px 7%;
+}
+
+#shop h2,
+#about h2,
+#contact h2 {
+    font-size: 30px;
+    margin-bottom: 12px;
+}
+
+.product-container {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    flex-wrap: wrap;
+    gap: 25px;
+    margin-top: 35px;
+}
+
+.product-card {
+    background-color: white;
+    width: 280px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+}
+
+.product-card img {
+    width: 100%;
+    height: 230px;
+    object-fit: contain;
+    display: block;
+    border-radius: 7px;
+}
+
+.product-card h3 {
+    margin-top: 15px;
+    text-transform: capitalize;
+}
+
+.product-card p {
+    margin: 8px 0 15px;
+}
+
+/* Enquiry buttons */
+.enquire-btn {
+    background-color: #8b7564;
+    color: white;
+    border: none;
+    padding: 11px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: Georgia, serif;
+    font-size: 15px;
+}
+
+.enquire-btn:hover {
+    background-color: #695446;
+}
+
+/* Enquiry box */
+.enquiry-box {
+    width: 100%;
+    max-width: 600px;
+    margin: 35px auto 0;
+    padding: 25px;
+    background-color: #eee7dc;
+    border-radius: 10px;
+}
+
+.enquiry-box a {
+    display: inline-block;
+    margin-top: 12px;
+    color: #695446;
+}
+
+/* About and Contact */
+#about,
+#contact {
+    text-align: center;
+    padding: 65px 20px;
+}
+
+#about {
+    background-color: #eee7dc;
+}
+
+#contact a {
+    color: #695446;
+}
+
+/* Footer */
+footer {
+    background-color: #514239;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+/* Mobile responsive design */
+@media (max-width: 600px) {
+    nav {
+        flex-direction: column;
+    }
+
+    nav div a {
+        margin: 0 8px;
+    }
+
+    #home {
+        padding: 75px 15px;
+    }
+
+    #home h1 {
+        font-size: 30px;
+    }
+
+    .product-card {
+        width: 100%;
+        max-width: 320px;
+    }
+
+    #shop h2,
+    #about h2,
+    #contact h2 {
+        font-size: 26px;
+    }
+}
