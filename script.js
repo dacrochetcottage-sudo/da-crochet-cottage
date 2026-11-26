@@ -1,65 +1,126 @@
 
 document.addEventListener("DOMContentLoaded", function () {
 
-    console.log("JavaScript connected successfully!");
+    console.log("Shopping cart connected!");
 
-    const enquiryButtons =
-        document.querySelectorAll(".enquire-btn");
+    let cart = JSON.parse(localStorage.getItem("crochetCart")) || [];
 
-    const enquiryMessage =
-        document.querySelector("#enquiry-message");
+    const cartItems = document.querySelector("#cart-items");
+    const cartTotal = document.querySelector("#cart-total");
 
-    const enquiryBox =
-        document.querySelector("#enquiry-box");
-
-    const whatsappButton =
-        document.querySelector("#whatsapp-order");
-
-    let selectedProduct = "";
-    let selectedPrice = "";
-
-    enquiryButtons.forEach(function (button) {
+    // Add products to cart
+    document.querySelectorAll(".add-to-cart").forEach(function (button) {
 
         button.addEventListener("click", function () {
 
-            selectedProduct = button.dataset.product;
-            selectedPrice = button.dataset.price;
+            const name = button.dataset.name;
+            const price = Number(button.dataset.price);
 
-            enquiryMessage.textContent =
-                "You selected: " + selectedProduct +
-                " | Price: Rs. " + selectedPrice;
-
-            enquiryBox.scrollIntoView({
-                behavior: "smooth",
-                block: "center"
+            const existingProduct = cart.find(function (item) {
+                return item.name === name;
             });
 
+            if (existingProduct) {
+                existingProduct.quantity++;
+            } else {
+                cart.push({
+                    name: name,
+                    price: price,
+                    quantity: 1
+                });
+            }
+
+            saveCart();
+            renderCart();
+
+            alert(name + " added to your cart!");
         });
 
     });
 
-    whatsappButton.addEventListener("click", function () {
+    // Save cart in browser
+    function saveCart() {
+        localStorage.setItem("crochetCart", JSON.stringify(cart));
+    }
 
-        if (!selectedProduct) {
-            alert("Please select a product first!");
-            return;
+    // Display cart
+    function renderCart() {
+
+        cartItems.innerHTML = "";
+
+        if (cart.length === 0) {
+            cartItems.innerHTML = "<p>Your cart is currently empty.</p>";
         }
 
-        const phoneNumber = "923XXXXXXXXX";
+        let total = 0;
 
-        const message =
-            "Hello! I am interested in ordering " +
-            selectedProduct +
-            " priced at Rs. " +
-            selectedPrice +
-            ". Please share more details.";
+        cart.forEach(function (item, index) {
 
-        const whatsappURL =
-            "https://wa.me/" + phoneNumber +
-            "?text=" + encodeURIComponent(message);
+            const itemTotal = item.price * item.quantity;
+            total += itemTotal;
 
-        window.open(whatsappURL, "_blank");
+            const cartItem = document.createElement("div");
+            cartItem.className = "cart-item";
+
+            cartItem.innerHTML = `
+                <div class="cart-item-info">
+                    <strong>${item.name}</strong>
+                    <p>Rs. ${item.price} each</p>
+                </div>
+
+                <div class="quantity-controls">
+                    <button class="quantity-btn" data-index="${index}" data-action="decrease">−</button>
+
+                    <span>${item.quantity}</span>
+
+                    <button class="quantity-btn" data-index="${index}" data-action="increase">+</button>
+                </div>
+
+                <strong>Rs. ${itemTotal}</strong>
+
+                <button class="remove-item" data-index="${index}">
+                    Remove
+                </button>
+            `;
+
+            cartItems.appendChild(cartItem);
+
+        });
+
+        cartTotal.textContent = total;
+        saveCart();
+    }
+
+    // Handle quantity and remove buttons
+    cartItems.addEventListener("click", function (event) {
+
+        const button = event.target;
+
+        if (!button.dataset.index) return;
+
+        const index = Number(button.dataset.index);
+
+        if (button.dataset.action === "increase") {
+            cart[index].quantity++;
+        }
+
+        if (button.dataset.action === "decrease") {
+            cart[index].quantity--;
+
+            if (cart[index].quantity <= 0) {
+                cart.splice(index, 1);
+            }
+        }
+
+        if (button.classList.contains("remove-item")) {
+            cart.splice(index, 1);
+        }
+
+        renderCart();
 
     });
+
+    // Show saved cart when website opens
+    renderCart();
 
 });
